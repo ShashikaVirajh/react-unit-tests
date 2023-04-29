@@ -37,17 +37,31 @@ describe('cocktailsSlice', () => {
       const mockResponse = [
         {
           cocktailId: '1',
-          cocktailName: 'Mojito',
+          cocktailName: 'Mojito One',
           category: 'Cocktail',
           description: 'A refreshing cocktail',
-          image: 'https://example.com/mojito.jpg'
+          image: 'https://example.com/mojito-one.jpg'
+        },
+        {
+          cocktailId: '2',
+          cocktailName: 'Mojito Two',
+          category: 'Cocktail',
+          description: 'A very good cocktail',
+          image: 'https://example.com/mojito-two.jpg'
         }
       ];
 
+      // Mocking `FetchRandomCocktails` that always resolves the `mockResponse`.
+      // This is done to isolate the test case from external dependencies.
       (CocktailService.FetchRandomCocktails as jest.Mock).mockResolvedValue(mockResponse);
 
+      // Dispatching `fetchCocktailList` redux action.
       await store.dispatch(fetchCocktailList());
 
+      // Get all the actions dispatched to the store during `fetchCocktailList` call.
+      // This includes actions dispatched by redux-thunk.
+      // actions[0] = fetchCocktailList.pending
+      // actions[1] = fetchCocktailList.fulfilled
       const actions = store.getActions();
 
       expect(actions[0].type).toEqual(fetchCocktailList.pending.type);
@@ -58,10 +72,16 @@ describe('cocktailsSlice', () => {
     it('should handle fetch cocktail list error', async () => {
       const errorMessage = 'Failed to fetch cocktail list';
 
+      // Mocking `FetchRandomCocktails` that always resolves the `mockResponse`.
+      // This is done to isolate the test case from external dependencies.
       (CocktailService.FetchRandomCocktails as jest.Mock).mockRejectedValue(errorMessage);
 
+      // Dispatching `fetchCocktailList` redux action.
       await store.dispatch(fetchCocktailList());
 
+      // Dispatching `fetchCocktailList` redux action.
+      // actions[0] = fetchCocktailList.pending
+      // actions[1] = fetchCocktailList.rejected
       const actions = store.getActions();
 
       expect(actions[0].type).toEqual(fetchCocktailList.pending.type);
@@ -73,6 +93,7 @@ describe('cocktailsSlice', () => {
   describe('reducers', () => {
     it('should handle fetchCocktailList.pending', () => {
       const newState = cocktailsSlice.reducer(undefined, { type: fetchCocktailList.pending.type });
+
       expect(newState.loading).toEqual(true);
       expect(newState.error).toEqual(null);
     });
@@ -81,10 +102,17 @@ describe('cocktailsSlice', () => {
       const mockPayload = [
         {
           cocktailId: '1',
-          cocktailName: 'Mojito',
+          cocktailName: 'Mojito One',
           category: 'Cocktail',
           description: 'A refreshing cocktail',
-          image: 'https://example.com/mojito.jpg'
+          image: 'https://example.com/mojito-one.jpg'
+        },
+        {
+          cocktailId: '2',
+          cocktailName: 'Mojito Two',
+          category: 'Cocktail',
+          description: 'A very good cocktail',
+          image: 'https://example.com/mojito-two.jpg'
         }
       ];
 
@@ -92,6 +120,7 @@ describe('cocktailsSlice', () => {
         type: fetchCocktailList.fulfilled.type,
         payload: mockPayload
       });
+
       expect(newState.loading).toEqual(false);
       expect(newState.error).toEqual(null);
       expect(newState.cocktailList).toEqual(mockPayload);
@@ -104,6 +133,7 @@ describe('cocktailsSlice', () => {
         type: fetchCocktailList.rejected.type,
         error: mockError
       });
+
       expect(newState.loading).toEqual(false);
       expect(newState.error).toEqual(mockError.message);
     });
