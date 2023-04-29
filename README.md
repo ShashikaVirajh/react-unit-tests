@@ -1,14 +1,15 @@
 ## Motivation
 
-- This project was developed as a reference project to start working with @reduxjs/toolkit redux library.
+- This project was developed as a reference project to start working with @testing-library/react.
 - Tried to provide a complete but simple example for the developers who want to easily get used to this
   amazing library.
+- Tested components, utils and redux reducers and actions.
 
 ## Installation Guide
 
 ```bash
-git clone https://github.com/ShashikaVirajh/react-redux-toolkit-example.git
-cd react-redux-toolkit-example
+git clone https://github.com/ShashikaVirajh/react-unit-tests-example.git
+cd react-unit-tests-example
 yarn
 ```
 
@@ -27,6 +28,7 @@ Sometimes these APIs are not working. It must be due to the free plan of cocktai
 
 Typescript - for type safety
 Redux tool kit - as the redux library
+@testing-library/react - for testing
 Mui - As the UI library
 Axios - to make API requests
 
