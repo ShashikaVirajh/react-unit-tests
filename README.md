@@ -28,7 +28,7 @@ Sometimes these APIs are not working. It must be due to the free plan of cocktai
 
 Typescript - for type safety
 Redux tool kit - as the redux library
-@testing-library/react - for testing
+@testing-library/react - to write unit tests
 Mui - As the UI library
 Axios - to make API requests
 
