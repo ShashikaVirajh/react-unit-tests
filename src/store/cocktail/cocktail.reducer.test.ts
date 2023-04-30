@@ -70,11 +70,11 @@ describe('cocktailsSlice', () => {
     });
 
     it('should handle fetch cocktail list error', async () => {
-      const errorMessage = 'Failed to fetch cocktail list';
+      const mockErrorMessage = 'Failed to fetch cocktail list';
 
-      // Mocking `FetchRandomCocktails` that always resolves the `mockResponse`.
+      // Mocking `FetchRandomCocktails` that always resolves the `mockErrorMessage`.
       // This is done to isolate the test case from external dependencies.
-      (CocktailService.FetchRandomCocktails as jest.Mock).mockRejectedValue(errorMessage);
+      (CocktailService.FetchRandomCocktails as jest.Mock).mockRejectedValue(mockErrorMessage);
 
       // Dispatching `fetchCocktailList` redux action.
       await store.dispatch(fetchCocktailList());
@@ -86,7 +86,7 @@ describe('cocktailsSlice', () => {
 
       expect(actions[0].type).toEqual(fetchCocktailList.pending.type);
       expect(actions[1].type).toEqual(fetchCocktailList.rejected.type);
-      expect(actions[1].error.message).toEqual(errorMessage);
+      expect(actions[1].error.message).toEqual(mockErrorMessage);
     });
   });
 
@@ -135,6 +135,7 @@ describe('cocktailsSlice', () => {
       });
 
       expect(newState.loading).toEqual(false);
+      expect(newState.cocktailList).toEqual([]);
       expect(newState.error).toEqual(mockError.message);
     });
   });

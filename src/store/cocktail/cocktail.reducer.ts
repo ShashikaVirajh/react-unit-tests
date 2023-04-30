@@ -38,12 +38,13 @@ export const cocktailsSlice = createSlice({
       })
       .addCase(fetchCocktailList.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
         state.cocktailList = action.payload;
+        state.error = null;
       })
       .addCase(fetchCocktailList.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ?? 'Unknown error';
+        state.cocktailList = [];
+        state.error = action.error.message ?? 'Error occured';
       });
   }
 });
