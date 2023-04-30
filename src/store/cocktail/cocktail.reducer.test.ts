@@ -126,7 +126,7 @@ describe('cocktailsSlice', () => {
       expect(newState.cocktailList).toEqual(mockPayload);
     });
 
-    it('should handle fetchCocktailList.rejected', () => {
+    it('should handle fetchCocktailList.rejected.', () => {
       const mockError = { message: 'Failed to fetch cocktail list' };
 
       const newState = cocktailsSlice.reducer(undefined, {

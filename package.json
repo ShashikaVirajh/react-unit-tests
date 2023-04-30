@@ -1,10 +1,10 @@
 {
-  "name": "react-unit-tests-example",
+  "name": "react-unit-tests",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "test": "react-scripts test --coverage --forceExit --detectOpenHandles --watchAll=true"
+    "test": "react-scripts test --coverage --forceExit --detectOpenHandles --watchAll=true --transformIgnorePatterns \"node_modules/(?!axios)/\""
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -15,11 +15,11 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.16.3",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "axios": "^1.3.6",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
