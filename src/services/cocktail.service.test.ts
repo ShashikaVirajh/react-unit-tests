@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
 import { CocktailService } from './cocktail.service';
-import { normalizeFetchRandomCocktailsResponse } from '../normalizers/cocktail.normalizer';
 
 // Mock axios and its response
 jest.mock('axios');
@@ -16,37 +15,73 @@ describe('CocktailService', () => {
       axiosMock = axios as unknown as jest.Mocked<AxiosInstance>;
     });
 
-    // it('should fetch random cocktails and return a list of cocktails', async () => {
-    // const mockAxiosResponse = {
-    //   data: [
-    //     {
-    //       cocktailId: '1',
-    //       cocktailName: 'Mojito One',
-    //       category: 'Cocktail',
-    //       description: 'A refreshing cocktail',
-    //       image: 'https://example.com/mojito-one.jpg'
-    //     },
-    //     {
-    //       cocktailId: '2',
-    //       cocktailName: 'Mojito Two',
-    //       category: 'Cocktail',
-    //       description: 'A very good cocktail',
-    //       image: 'https://example.com/mojito-two.jpg'
-    //     }
-    //   ]
-    // };
+    it('should fetch random cocktails and return a list of cocktails', async () => {
+      // Response returns from the API
+      const mockAxiosResponse = {
+        data: {
+          drinks: [
+            {
+              idDrink: '1',
+              strDrink: 'Mojito One',
+              strCategory: 'Cocktail',
+              strInstructions: 'A refreshing cocktail',
+              strDrinkThumb: 'https://example.com/mojito-one.jpg'
+            },
+            {
+              idDrink: '2',
+              strDrink: 'Mojito Two',
+              strCategory: 'Mocktail',
+              strInstructions: 'A refreshing mocktail',
+              strDrinkThumb: 'https://example.com/mojito-two.jpg'
+            },
+            {
+              idDrink: '3',
+              strDrink: 'Mojito Three',
+              strCategory: 'Cocktail',
+              strInstructions: 'Another refreshing cocktail',
+              strDrinkThumb: 'https://example.com/mojito-three.jpg'
+            }
+          ]
+        }
+      };
 
-    //   axiosMock.get.mockResolvedValue(mockAxiosResponse);
+      // normalized response using normalizeFetchRandomCocktailsResponse
+      const normalizedMockAxiosResponse = [
+        {
+          cocktailId: '1',
+          cocktailName: 'Mojito One',
+          category: 'Cocktail',
+          description: 'A refreshing cocktail',
+          image: 'https://example.com/mojito-one.jpg'
+        },
+        {
+          cocktailId: '2',
+          cocktailName: 'Mojito Two',
+          category: 'Mocktail',
+          description: 'A refreshing mocktail',
+          image: 'https://example.com/mojito-two.jpg'
+        },
+        {
+          cocktailId: '3',
+          cocktailName: 'Mojito Three',
+          category: 'Cocktail',
+          description: 'Another refreshing cocktail',
+          image: 'https://example.com/mojito-three.jpg'
+        }
+      ];
 
-    //   const cocktailList = await CocktailService.FetchRandomCocktails();
-    //   expect(cocktailList.length).toEqual(mockAxiosResponse.data.length);
-    // });
+      axiosMock.get.mockResolvedValue(mockAxiosResponse);
+      const cocktailList = await CocktailService.FetchRandomCocktails();
+
+      expect(cocktailList.length).toEqual(normalizedMockAxiosResponse.length);
+    });
 
     it('should catch and return an error if fetching fails', async () => {
       const errorMessage = 'Error fetching cocktails';
-      axiosMock.get.mockRejectedValue(new Error(errorMessage));
 
+      axiosMock.get.mockRejectedValue(new Error(errorMessage));
       const error = await CocktailService.FetchRandomCocktails();
+
       expect(error.message).toEqual(errorMessage);
     });
   });

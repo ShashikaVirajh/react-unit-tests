@@ -1,6 +1,7 @@
 import { TCocktail } from '../store/cocktail/cocktail.reducer';
 
 export const normalizeFetchRandomCocktailsResponse = (data: any): any => {
+  // console.log(data);
   const cocktailList: TCocktail[] = data?.map((cocktail: any) => {
     const { drinks } = cocktail?.data;
 
